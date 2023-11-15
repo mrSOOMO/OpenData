@@ -1,0 +1,9 @@
+src/main/scala/com/rsydorenko/AccTestApp.scala
+src/main/scala/com/rsydorenko/AnimationObjTest.scala
+src/main/scala/com/rsydorenko/APIEncryptionTest.scala
+src/main/scala/com/rsydorenko/ClientRequestComposerApp.scala
+src/main/scala/com/rsydorenko/ClientSideReqEncoder.scala
+src/main/scala/com/rsydorenko/JwtApp.scala
+src/main/scala/com/rsydorenko/Simple.scala
+src/main/scala/com/rsydorenko/TestAuth.scala
+src/main/scala/com/rsydorenko/TestEncrypt.scala
