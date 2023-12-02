@@ -1,0 +1,1 @@
+docker run --name=twinkler_db -p 5432:5432 -d twinkler_db

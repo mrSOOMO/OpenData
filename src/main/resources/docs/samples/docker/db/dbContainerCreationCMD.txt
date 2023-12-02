@@ -1,0 +1,9 @@
+To build img run cmd in ide cml:
+docker build -f Dockerfile.db -t twinklerdb .
+
+To create and run container from img run cmd in ide cml:
+docker run --name=twinkler_db -e POSTGRES_USER=rspguser -e POSTGRES_PASSWORD=rspgpwd -e POSTGRES_DB=twinkler_db -p 5432:5432 -d postgres
+
+or shorter version of cmd if env vars provided in Docker.db file:
+docker run --name=twinkler_db -p 5432:5432 -d twinkler_db
+

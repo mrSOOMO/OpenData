@@ -1,0 +1,32 @@
+# Используйте официальный образ Alpine Linux в качестве базового
+FROM alpine:3.18
+
+# Установите переменные окружения для PostgreSQL
+ENV POSTGRES_USER=user \
+    POSTGRES_PASSWORD=user \
+    POSTGRES_DB=opendata_db \
+    PGDATA=/var/lib/postgresql/data
+
+# Установите PostgreSQL и необходимые инструменты
+RUN apk add --no-cache postgresql postgresql-contrib su-exec
+
+# Создайте директорию для данных PostgreSQL и установите правильные разрешения
+RUN mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA"
+
+# Создайте директорию /run/postgresql и установите правильные разрешения
+RUN mkdir -p /run/postgresql && chown -R postgres:postgres /run/postgresql && chmod 2777 /run/postgresql
+
+# Инициализация базы данных PostgreSQL
+RUN su-exec postgres initdb
+
+# Откройте порт 5432
+EXPOSE 5432
+
+# Копируйте скрипты инициализации базы данных, если они у вас есть
+# COPY ./init-scripts /docker-entrypoint-initdb.d/
+
+# Смените пользователя на 'postgres' перед запуском контейнера
+USER postgres
+
+# Запустите процесс PostgreSQL
+CMD ["postgres"]

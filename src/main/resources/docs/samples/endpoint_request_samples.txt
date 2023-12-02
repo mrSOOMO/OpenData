@@ -1,0 +1,35 @@
+endpoint
+http://localhost:8090/account
+Body (as TEXT or JSON)
+{
+    "command": "addAll",
+    "parameter": "[{\"login\":\"TestAcc\",\"hashedPassword\":\"This is a test pass\", \"info\":\" TestInfo\",\"accessLevel\":1, \"id\": 0}]"
+    }
+
+postman payload:
+Cv/l9Yhvpa1ea0GSG1KOjbRKE2Wa0ds1OEPxTq08Fh2BxVvjW9wbQm+izBgYKIG8McqJVAuqH8FGU9g4Bce1k76YhX7jco62KK1fRv+NL37Prs+SguVH0Aqc1LuzEeUtk2EdJnK6xS0vhEtZMuie3XWRxZq4zUystOOL4s5eP9hWrWiwzeoG8/C5VuK+l1qB87kIrYm5tlSmoGOmIX7mGZm08YxPU/dbblQU4boMoQClQWKSaRttRdq10VMzIlFm1NUw1L5wJPzBURNuDxmtp6f8/MfLNVAaLD1EEYPAEFf8+M/wuzDlWuHxWyz13tGz6fhDQV3LAxFpX9fNEm6BiA==
+
+{
+    "command": "deleteById",
+    "parameter": "7"
+    }
+
+endpoint
+ws://localhost:8090/connect
+message
+
+ {
+    "command": "login",
+    "credentials": {
+      "login": "user5",
+      "password": "password5"
+    }
+  }
+
+  {
+    "target": "Animation",
+    "command": "addAll",
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50SWQiOjUsImFjY2Vzc0xldmVsIjo1LCJleHBpcmVBdCI6IjIwMjMtMDYtMDJUMjI6MDc6MTkuNzU3ODI4NzAwWiJ9.j9G1c-VPDUPnVtaxM8CuBCJmQVUlt0KoExuLY-cetbc",
+    "parameter": "[{\"name\":\"TestAnimation\",\"authorId\":2,\"info\":\"This is a test animation\",\"id\":1}]"
+  }
+

@@ -1,0 +1,46 @@
+in host cmd login to aws using CLI:
+
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 383987334637.dkr.ecr.eu-central-1.amazonaws.com
+
+create aws img on host from existing container  for aws:
+aws ecr create-repository --repository-name twinkler_app
+
+tag img (run in IDE: docker build -t twinkler_app:latest . ):
+docker tag twinkler_app:latest 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app:latest
+
+
+push to aws ecr:
+docker push 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app:latest
+
+
+pull img from erc to ec2 instance on aws https://eu-central-1.console.aws.amazon.com/ec2-instance-connect/ssh?:
+docker pull 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app:latest
+
+create docker network in running ec2 instance:
+docker network create mynetwork
+
+responce: network=f73521583efe862f398b3d719d6f958367cf773305dabb5fd4035e6c18e09dc7
+
+
+run app in docker network map ports and set envs for db:
+docker run -d --network=f73521583efe862f398b3d719d6f958367cf773305dabb5fd4035e6c18e09dc7 --name=twinkler_app -p 8090:8090 -e POSTGRES_HOST=host.docker.internal -e POSTGRES_PORT=5432 -d 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app:latest
+
+docker run -d --network=f73521583efe862f398b3d719d6f958367cf773305dabb5fd4035e6c18e09dc7 --name twinkler_app -p 8090:8090 -e POSTGRES_HOST=twinkler_db -e POSTGRES_PORT=5432 -d 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app
+
+
+# Build the Docker image
+docker build -t twinkler_app .
+
+# Push the Docker image to AWS ECR
+aws ecr get-login-password --region region | docker login --username AWS --password-stdin your-aws-account-id.dkr.ecr.region.amazonaws.com
+docker tag twinkler_app:latest your-aws-account-id.dkr.ecr.region.amazonaws.com/twinkler_app:latest
+docker push your-aws-account-id.dkr.ecr.region.amazonaws.com/twinkler_app:latest
+
+# Restart the application container
+docker stop twinkler_app
+docker rm twinkler_app
+
+docker run -d --network=twinkler_network --name=twinkler_app -p 8090:8090 -e POSTGRES_HOST=host.docker.internal -e POSTGRES_PORT=5432 -d 383987334637.dkr.ecr.eu-central-1.amazonaws.com/twinkler_app:latest
+
+
+

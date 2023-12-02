@@ -1,0 +1,37 @@
+#As a side note, consider using multi-stage Docker builds to reduce the final image size.
+ In the current setup, the final image includes all the build tools (SBT, JDK, etc.)
+ and intermediate build files, which are not needed to run the application.
+ In a multi-stage build, you would use one image to build the application and a second,
+  smaller image to run it. The second image would only include the built application and
+   the runtime environment (like a JRE, which is smaller than a JDK).
+
+A more fine-grained approach would be to specifically copy only the directories or
+ files that are required for your application to run, rather than copying everything.
+  This is beneficial as it can lead to smaller Docker image sizes and quicker build times,
+   especially when the context directory is large (e.g., contains logs, local databases,
+   or other unnecessary files).
+
+Considering that, you might want to remove the COPY . . line from your Dockerfile,
+ or replace it with more specific COPY commands if there are still required files or
+ directories that haven't been copied over.
+
+It all depends on the structure and dependencies of your project.
+ If your project requires files from other directories, you should either copy those
+  directories specifically or keep the COPY . . line.
+
+
+  ## It's a multi project. Steps to run the project:
+  1. Docker desktop should be installed.
+  2. Run sbt-shell
+  3. Run `clean;update;reload;universal:packageBin`
+  4. Open terminal in a root folder of the project.
+  5. Run `docker-compose up --detach` (on first run some services will be failed to start, until postgres and rabbitmq will be up and running)
+  6. So if it's a first run, run `docker-compose up --detach` again, until all services will be up and running.
+  7. If you have some changes, and you want to run them in docker, need to:
+      - change version of needed service in `build.sbt` file.
+      - set this version in `docker-compose.yml` file.
+      - set this version in `Dockefile` file in service folder.
+      - run in sbt-shell `clean;update;reload;universal:packageBin` again.
+      - run in terminal of root folder `docker-compose up --detach` again.
+  8. There is `start_app.sh` script in root folder, which will run all services in docker.
+

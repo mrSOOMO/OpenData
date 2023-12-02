@@ -1,0 +1,9 @@
+FROM postgres:13-alpine
+
+# Set environment variables
+ENV POSTGRES_USER rspguser
+ENV POSTGRES_PASSWORD rspgpwd
+ENV POSTGRES_DB twinkler_db
+
+# Expose the PostgreSQL port
+EXPOSE 5432

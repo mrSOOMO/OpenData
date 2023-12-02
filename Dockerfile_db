@@ -1,0 +1,16 @@
+# to build image use
+# docker build -t opendata-postgres -f Dockerfile_db .
+
+# to run coutainer use
+# docker run --name opendata-db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=user -e POSTGRES_DB=opendata_db -p 5432:5432 -d opendata-postgres
+#FROM postgres:13-alpine
+FROM postgres:16.1-alpine3.18
+
+# Set environment variables
+ENV POSTGRES_USER rspguser
+ENV POSTGRES_PASSWORD rspgpwd
+ENV POSTGRES_DB twinkler_db
+
+
+# Expose the PostgreSQL port
+#EXPOSE 5432
